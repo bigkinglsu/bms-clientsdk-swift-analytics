@@ -7,10 +7,9 @@ Pod::Spec.new do |s|
   s.license           = 'Apache License, Version 2.0'
   s.authors           = { 'IBM Bluemix Services Mobile SDK' => 'mobilsdk@us.ibm.com' }
 
-  #s.source       = { :git => 'https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-swift-analytics.git', :tag => s.version }
-  s.source       = { :git => 'https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-swift-analytics.git', :branch => 'inapp', :submodules => true }
+  s.source       = { :git => 'https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-swift-analytics.git', :tag => s.version, }
 
-  s.subspec 'minizip' do |ss|
+  s.subspec 'SSZipArchive' do |ss|
     ss.source_files = 'Source/SSZipArchive/*.{m,h}', 'Source/SSZipArchive/minizip/*.{c,h}', 'Source/SSZipArchive/minizip/aes/*.{c,h}' 
     ss.libraries = 'z'
     ss.pod_target_xcconfig = {'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Source/SSZipArchive','LIBRARY_SEARCH_PATHS' => '$(SRCROOT)/Source/SSZipArchive'}
@@ -20,10 +19,6 @@ Pod::Spec.new do |s|
   s.source_files = 'Source/**/*.swift','Source/Resource/*.h'
   s.ios.exclude_files = 'Source/**/*watchOS*.swift'
   s.watchos.exclude_files = 'Source/**/*iOS*.swift','Source/Feedback','Source/SSZipArchive/*.{swift,h}', 'Source/SSZipArchive/minizip/*.{c,h}', 'Source/Zip/minizip/aes/*.{c,h}'
-  #s.ios.pod_target_xcconfig = {'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Source/Zip','LIBRARY_SEARCH_PATHS' => '$(SRCROOT)/Source/Zip/'}
-  #s.ios.public_header_files= 'Source/Zip/*.h','Source/Resources/*.h'
-  #s.ios.preserve_paths= 'Source/Zip/minizip/module.modulemap'
-  #s.ios.libraries = 'z'
   s.dependency 'BMSCore', '~> 2.1'
 
   s.requires_arc = true
