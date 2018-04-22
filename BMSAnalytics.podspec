@@ -8,19 +8,26 @@ Pod::Spec.new do |s|
   s.authors           = { 'IBM Bluemix Services Mobile SDK' => 'mobilsdk@us.ibm.com' }
 
   #s.source       = { :git => 'https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-swift-analytics.git', :tag => s.version }
-  s.source       = { :git => 'https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-swift-analytics.git', :branch => 'inapp' }
-  s.source_files = 'Source/Zip/minizip/*.{c,h}','Source/**/*.{swift,h}','Source/Zip/*.{swift,h}'
+  s.source       = { :git => 'https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-swift-analytics.git', :branch => 'inapp', :submodules => true }
+
+  s.subspec 'minizip' do |ss|
+    ss.source_files = 'Source/SSZipArchive/*.{m,h}', 'Source/SSZipArchive/minizip/*.{c,h}', 'Source/SSZipArchive/minizip/aes/*.{c,h}' 
+    ss.libraries = 'z'
+    ss.pod_target_xcconfig = {'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Source/SSZipArchive','LIBRARY_SEARCH_PATHS' => '$(SRCROOT)/Source/SSZipArchive'}
+    ss.public_header_files= 'Source/SSZipArchive/*.h','Source/SSZipArchive/minizip/*.h','Source/SSZipArchive/minizip/aes/*.h'
+  end
+
+  s.source_files = 'Source/**/*.swift','Source/Resource/*.h'
   s.ios.exclude_files = 'Source/**/*watchOS*.swift'
-  s.watchos.exclude_files = 'Source/**/*iOS*.swift','Source/Feedback','Source/Zip/*.{swift,h}', 'Source/Zip/minizip/*.{c,h}', 'Source/Zip/minizip/aes/*.{c,h}'
-  s.ios.pod_target_xcconfig = {'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Source/Zip/minizip/**','LIBRARY_SEARCH_PATHS' => '$(SRCROOT)/Source/Zip/'}
-  s.ios.public_header_files= 'Source/Zip/minizip/*.h','Source/Resources/*.h'
-  s.ios.preserve_paths= 'Source/Zip/minizip/module.modulemap'
-  s.ios.libraries = 'z'
+  s.watchos.exclude_files = 'Source/**/*iOS*.swift','Source/Feedback','Source/SSZipArchive/*.{swift,h}', 'Source/SSZipArchive/minizip/*.{c,h}', 'Source/Zip/minizip/aes/*.{c,h}'
+  #s.ios.pod_target_xcconfig = {'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Source/Zip','LIBRARY_SEARCH_PATHS' => '$(SRCROOT)/Source/Zip/'}
+  #s.ios.public_header_files= 'Source/Zip/*.h','Source/Resources/*.h'
+  #s.ios.preserve_paths= 'Source/Zip/minizip/module.modulemap'
+  #s.ios.libraries = 'z'
   s.dependency 'BMSCore', '~> 2.1'
 
   s.requires_arc = true
   s.ios.resources = ['Source/Resources/*.{storyboard,xcassets,json,imageset,png}']
   s.ios.deployment_target = '8.0'
   s.watchos.deployment_target = '2.0'
-
 end
